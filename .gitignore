@@ -1,0 +1,16 @@
+# 忽略依赖包（体积巨大，必须忽略）
+node_modules/
+**/node_modules/
+
+# 忽略系统文件
+.DS_Store
+Thumbs.db
+
+# 忽略环境变量
+.env
+
+# 忽略上传的测试照片（只保留代码，不存具体数据）
+photo-map-server/uploads/
+
+# 忽略 IDE 配置
+.vscode/
