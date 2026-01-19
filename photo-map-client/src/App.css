@@ -1,38 +1,149 @@
-.App {
-  text-align: center;
-}
+/* 全局重置 */
+body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+/* 地图容器：占满全屏 */
+.map-container { height: 100vh; width: 100vw; z-index: 1; }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* 悬浮侧边栏：毛玻璃效果 */
+.sidebar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 300px;
+  max-height: 90vh;
+  background: rgba(255, 255, 255, 0.85); /* 半透明白 */
+  backdrop-filter: blur(10px); /* 模糊背景 */
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* 保证在地图之上 */
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+
+/* 顶部标题栏 */
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  background: #fff;
+}
+
+.sidebar-header h2 { margin: 0; font-size: 18px; color: #333; }
+.stat-text { font-size: 12px; color: #666; margin-top: 5px; }
+
+/* 上传按钮美化 */
+.upload-btn-wrapper {
+  margin-top: 15px;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+.btn {
+  border: 2px dashed #007bff;
+  color: #007bff;
+  background-color: rgba(0, 123, 255, 0.05);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  width: 100%;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+
+.btn:hover { background-color: rgba(0, 123, 255, 0.1); }
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0; top: 0; opacity: 0; cursor: pointer;
+}
+
+/* 照片列表区域 */
+.photo-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.photo-item {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #eee;
 }
 
-.App-link {
-  color: #61dafb;
+.photo-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-color: #007bff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.photo-thumb {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 12px;
+}
+
+.photo-info h4 { margin: 0 0 4px 0; font-size: 14px; color: #333; }
+.photo-info p { margin: 0; font-size: 12px; color: #999; }
+
+/* 时间轴连接线效果 */
+.photo-list {
+  position: relative;
+  padding-left: 25px; /* 为左侧线条留出空间 */
+}
+
+/* 垂直引导线 */
+.photo-list::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: #e0e0e0;
+  z-index: 0;
+}
+
+.photo-item {
+  position: relative;
+  z-index: 1; /* 压在引导线上方 */
+}
+
+/* 项目左侧的小圆点 */
+.photo-item::before {
+  content: '';
+  position: absolute;
+  left: -17px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: #007bff;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px #007bff;
+}
+
+/* 旅行路线动画效果 */
+.travel-line-animation {
+  stroke-dasharray: 20;
+  animation: dash 5s linear infinite;
+}
+
+@keyframes dash {
+  from { stroke-dashoffset: 200; }
+  to { stroke-dashoffset: 0; }
 }
